@@ -24,19 +24,32 @@ been found in the input spreadsheets. Standard field names have a many-to-one
 relationship with known column names.
 """
 standard_name_to_known_headers = {
-    "id": ["Library Barcode", "bar", "W71 ID Card Number"],
-    "alt_id": ["Student ID", "sid", "Person ID"],
-    "first_name": ["Person Chosen First Name - W72", "fname", "Person First Name"],
+    "id": ["bar", "Library Barcode", "W71 ID Card Number"],
+    "alt_id": ["sid", "Employee ID", "Student ID", "Person ID"],
+    "first_name": [
+        "fname",
+        "Person Chosen First Name - W72",
+        "Person First Name",
+    ],
     "middle_name": ["mname", "Person Middle Name"],
-    "last_name": ["Person Chosen Last Name - W72", "lname", "Person Last Name"],
-    "email": ["Student Email", "email", "Person Preferred Email Address"],
-    "cell_phone": ["Cell Phone", "cell"],
-    "home_phone": ["Home Phone", "phone", "Person Phone Number"],
-    "street_1": ["Person Address Line 1", "street"],
-    "street_2": ["Person Address Line 2", "apt"],
-    "city": ["Person Address City", "city"],
-    "state": ["Person Address State", "st"],
-    "zipcode": ["Person Address Zip", "zip"],
+    "last_name": [
+        "lname",
+        "Person Chosen Last Name - W72",
+        "Person Last Name",
+    ],
+    "email": [
+        "email",
+        "Staff Email",
+        "Student Email",
+        "Person Preferred Email Address",
+    ],
+    "cell_phone": ["cell", "Cell Phone"],
+    "home_phone": ["phone", "Home Phone", "Person Phone Number"],
+    "street_1": ["street", "Person Address Line 1"],
+    "street_2": ["apt", "Person Address Line 2"],
+    "city": ["city", "Person Address City"],
+    "state": ["st", "Person Address State"],
+    "zipcode": ["zip", "Person Address Zip"],
 }
 
 
