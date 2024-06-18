@@ -1,5 +1,4 @@
 import sys
-import pandas as pd
 
 """
 These are the are standard names of the required fields. Each required field
@@ -23,7 +22,7 @@ Map standard field names to a list of non-standard known column names that have
 been found in the input spreadsheets. Standard field names have a many-to-one
 relationship with known column names.
 """
-standard_name_to_known_headers = {
+_standard_name_to_known_headers = {
     "id": ["bar", "Library Barcode", "W71 ID Card Number"],
     "alt_id": ["sid", "Employee ID", "Student ID", "Person ID"],
     "first_name": [
@@ -53,25 +52,25 @@ standard_name_to_known_headers = {
 }
 
 
-def map_known_headers_to_standard_name():
+def _map_known_headers_to_standard_name():
     """
     Map known non-standard speadsheet column names to standard field names.
     """
     column_map = {}
-    for standard_name, known_headers in standard_name_to_known_headers.items():
+    for standard_name, known_headers in _standard_name_to_known_headers.items():
         for known_header in known_headers:
             column_map[known_header] = standard_name
     return column_map
 
 
-def standardize_headers(df):
+def _standardize_headers(df):
     """
     Standardize the column headers by renaming any non-standard headers fournd
     in the input spreadsheet to the appropriate standard field name. If all
     required fields are not found, the missing fileds are printed and the
     program exits.
     """
-    known_headers = map_known_headers_to_standard_name()
+    known_headers = _map_known_headers_to_standard_name()
     headers_found = set()
     for column in df.columns:
         if column in known_headers:
@@ -90,5 +89,5 @@ def extract_users(df):
     are standard field names and the values are the corresponding data from the
     input spreadsheet.
     """
-    standardize_headers(df)
+    _standardize_headers(df)
     return df.to_dict(orient="records")
