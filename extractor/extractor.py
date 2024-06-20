@@ -1,4 +1,5 @@
 import sys
+import pandas as pd
 
 """
 These are the are standard names of the required fields. Each required field
@@ -82,12 +83,30 @@ def _standardize_headers(df):
         sys.exit(1)
 
 
-def extract_users(df):
+def _load_excel_file(file_path):
+    """
+    Load an Excel file and return a pandas DataFrame.
+    """
+    try:
+        return pd.read_excel(file_path, dtype=str).fillna("")
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        sys.exit(1)
+    except ValueError:
+        print(f"Invalid file type: {file_path}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        sys.exit(1)
+
+
+def extract_users(file_path):
     """
     Extract data from the input spreadsheet and return a list of dictionaries,
     where each dictionary represents a row in the input spreadsheet. The keys
     are standard field names and the values are the corresponding data from the
     input spreadsheet.
     """
+    df = _load_excel_file(file_path)
     _standardize_headers(df)
     return df.to_dict(orient="records")
