@@ -17,6 +17,11 @@ required_fields = {
     "state",
     "zipcode",
 }
+optional_fields = {
+    "middle_name",
+    "cell_phone",
+    "street_2",
+}
 
 """
 Map standard field names to a list of non-standard known column names that have
