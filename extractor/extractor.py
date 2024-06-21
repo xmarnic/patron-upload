@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 
 """
-These are the are standard names of the required fields. Each required field
+Standard names of the required fields. Each required field
 must be mapped to a known column name in the input spreadsheet.
 """
 required_fields = {
@@ -15,8 +15,11 @@ required_fields = {
     "street_1",
     "city",
     "state",
-    "zipcode",
+    "zip_code",
 }
+"""
+Standard names of the optional fields.
+"""
 optional_fields = {
     "middle_name",
     "cell_phone",
@@ -24,9 +27,9 @@ optional_fields = {
 }
 
 """
-Map standard field names to a list of non-standard known column names that have
-been found in the input spreadsheets. Standard field names have a many-to-one
-relationship with known column names.
+Map standard field names to a list of non-standard, known column names that
+have been found in the input spreadsheets. Standard field names have a
+many-to-one relationship with known column names.
 """
 _standard_name_to_known_headers = {
     "id": ["bar", "Library Barcode", "W71 ID Card Number"],
@@ -54,13 +57,13 @@ _standard_name_to_known_headers = {
     "street_2": ["apt", "Person Address Line 2"],
     "city": ["city", "Person Address City"],
     "state": ["st", "Person Address State"],
-    "zipcode": ["zip", "Person Address Zip"],
+    "zip_code": ["zip", "Person Address Zip"],
 }
 
 
 def _map_known_headers_to_standard_name():
     """
-    Map known non-standard speadsheet column names to standard field names.
+    Map known, non-standard speadsheet column names to standard field names.
     """
     column_map = {}
     for standard_name, known_headers in _standard_name_to_known_headers.items():
@@ -71,7 +74,7 @@ def _map_known_headers_to_standard_name():
 
 def _standardize_headers(df):
     """
-    Standardize the column headers by renaming any non-standard headers fournd
+    Standardize the column headers by renaming any non-standard headers found
     in the input spreadsheet to the appropriate standard field name. If all
     required fields are not found, the missing fileds are printed and the
     program exits.
@@ -108,9 +111,9 @@ def _load_excel_file(file_path):
 def extract_users(file_path):
     """
     Extract data from the input spreadsheet and return a list of dictionaries,
-    where each dictionary represents a row in the input spreadsheet. The keys
-    are standard field names and the values are the corresponding data from the
-    input spreadsheet.
+    where each dictionary represents a row in the input spreadsheet
+    (i.e., a user record). The keys are standard field names and the values are
+    the corresponding data from the input spreadsheet.
     """
     df = _load_excel_file(file_path)
     _standardize_headers(df)
