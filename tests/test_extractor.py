@@ -1,4 +1,5 @@
 import pytest
+import pandas as pd
 from extractor import extract_users
 from extractor.extractor import _map_known_headers_to_standard_name
 
@@ -30,14 +31,29 @@ def expected_headers():
     }
 
 
+@pytest.fixture
+def cwc_staff_sheet():
+    return pd.read_excel("../data/cwc-staff-orig.xlsx", dtype=str).fillna("")
+
+
+@pytest.fixture
+def cwc_student_sheet():
+    return pd.read_excel("../data/cwc-student-orig.xlsx", dtype=str).fillna("")
+
+
+@pytest.fixture
+def cspc_student_sheet():
+    return pd.read_excel("../data/cspc-orig.xlsx", dtype=str).fillna("")
+
+
 def test_all_known_headers_are_mapped(expected_headers):
     actual_headers = set(_map_known_headers_to_standard_name().keys())
     missing_headers = expected_headers - actual_headers
     assert not missing_headers, f"Missing headers: {missing_headers}"
 
 
-def test_extract_users_on_cwc_staff_sheet():
-    users = extract_users("../data/cwc-staff-orig.xlsx")
+def test_extract_users_on_cwc_staff_sheet(cwc_staff_sheet):
+    users = extract_users(cwc_staff_sheet)
     user = users[0]
     assert user["first_name"] == "Jennifer"
     assert user["last_name"] == "Amend"
@@ -53,8 +69,8 @@ def test_extract_users_on_cwc_staff_sheet():
     assert user["zip_code"] == "82501"
 
 
-def test_extract_users_on_cwc_student_sheet():
-    users = extract_users("../data/cwc-student-orig.xlsx")
+def test_extract_users_on_cwc_student_sheet(cwc_student_sheet):
+    users = extract_users(cwc_student_sheet)
     user = users[157]
     assert user["first_name"] == "Alina"
     assert user["last_name"] == "Sheikova"
@@ -70,8 +86,8 @@ def test_extract_users_on_cwc_student_sheet():
     assert user["zip_code"] == "83001"
 
 
-def test_extract_users_on_cspc_sheet():
-    users = extract_users("../data/cspc-orig.xlsx")
+def test_extract_users_on_cspc_student_sheet(cspc_student_sheet):
+    users = extract_users(cspc_student_sheet)
     user = users[-2]
     assert user["first_name"] == "Rachael"
     assert user["middle_name"] == "Kellen"
